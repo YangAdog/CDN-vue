@@ -9,8 +9,16 @@
         img {
             width: 300px;
         }
+
         .red {
             color: red;
+        }
+
+        .text-bold {
+            font-weight: bolder;
+        }
+        .text-center {
+            text-align: center;
         }
     </style>
 </head>
@@ -23,11 +31,17 @@
         <img :src="imgPath" alt="" @click="changeImage()">
 
         <!-- <h1 v-bind:class="'red'">屬性綁定</h1> -->
-        <hr>
-        <!-- :class="{ 'class名稱':判斷式 }" -->
-        <h1 class="{'red': }">戰力: {{ power }}</h1>
-        <button type="button">增加戰力</button>
 
+        <hr>
+
+        <!-- 第一種寫法 :class="{ 'class名稱':判斷式, ... }" -->
+        <!-- <h1 class="{ 'red': power >= 9000, 'class':true }" class="text-bold">戰力: {{ power }}</h1> -->
+
+        <!-- 第二種寫法 :class="fn" 依靠function 回傳要使用的class名稱 -->
+        <h1 :class="cssStyle()">戰力: {{ power }}</h1>
+
+
+        <button type="button" @click="power++">增加戰力</button>
     </div>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script>
@@ -36,8 +50,9 @@
         createApp({
             data() {
                 return {
-                    state:1,
+                    state: 1,
                     imgPath: './img/狗.gif',
+                    power: 8999,
                 };
             },
             methods: {
@@ -53,6 +68,12 @@
                         this.imgPath = './img/狗.gif';
                         this.state = 1;
                     }
+                },
+                cssStyle() {
+                    if (this.power >= 9000) {
+                        return 'red text-center';
+                    }
+                    return '';
                 },
             },
         }).mount('#app');

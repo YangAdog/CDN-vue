@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .card {
+            border: 1px solid #000;
+            width: 242px;
+        }
+
+        .card-image {
+            width: 240px;
+        }
+
+        img {
+            width: 100%;
+        }
+
+        .card-body {
+            width: 100%;
+        }
+        form {
+            margin-bottom: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- v-for key的用途 -->
+    <!-- 1. key要綁定一個獨一無二的值，如果真的沒有，你可以選擇索引值 -->
+    <!-- Vue 會儲存一個記憶 -->
+
+
+    <div id="app">
+        <!-- 原生作法: 監聽form的submit事件 preventDefault() 擋下送出的動作 -->
+        <form @submit.prevent="submitData()">
+            name <input v-model="name" type="text">
+            power <input v-model="power" type="number">
+            <button type="submit">新增資料</button>
+        </form>
+        <div class="container">
+
+
+            <!-- v-for=" item(每一筆資料) in array(全部的資料) " -->
+            <!-- v-for=" (單筆資料,其索引值) in array(全部的資料) " -->
+            <!-- :key="獨一無二的值" -->
+            <div v-for="(doge, index) in doges" :key="doge.id" class="card">
+                <div class="card-image">
+                    <img :src="doge.path" :alt="doge.name">
+                </div>
+                <div class="card-body">
+                    <p class="name">name: {{ doge.name }}</p>
+                    <p class="power">power: {{ doge.power }}</p>
+                    <div class="btns">
+                        <!-- 戰力 >= 11000時，增加戰力按鈕消失( v-if :直接在F12隱藏內容，還可以多加判斷條件 v-else ) -->
+                        <button type="button" v-if="doge.power <= 11000" @click="addPower(doge)">增加戰力</button>
+                        <!-- 戰力 >= 11000時，增加戰力按鈕消失( F12中多display:none ) -->
+                        <button type="button" v-show="doge.power > 0" @click="doge.power-=1000">減少戰力</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const { createApp } = Vue;
+
+        createApp({
+            data() {
+                return {
+                    doges: [{
+                        id: 1,
+                        name: 'Damn',
+                        power: 5000,
+                        path: './img/狗.jpg'
+                    }, {
+                        id: 2,
+                        name: 'WTF',
+                        power: 8000,
+                        path: './img/狗.gif'
+                    }, {
+                        id: 3,
+                        name: 'shit',
+                        power: 10000,
+                        path: './img/1.gif'
+                    }],
+                    name: '',
+                    power: 0,
+                };
+            },
+            methods: {
+                // 切換圖片
+                // dogeImage(power) {
+                //     if (power <= 5000) {
+                //         return './img/狗.jpg';
+                //     } else if (power <= 8999) {
+                //         return './img/狗.gif';
+                //     } else {
+                //         return './img/1.gif';
+                //     }
+                // },
+                submitData() {
+                    this.doges.push ({
+                        id: this.doge.length + 1,
+                        name: this.name,
+                        power: this.power,
+                    });
+                },
+                addPower(dogeData){
+                    // this.power += 1000;
+                    dogeData.power += 1000;
+                }
+            },
+        }).mount('#app');
+    </script>
+</body>
+
+</html>
