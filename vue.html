@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">{{ message }}
+        <div>
+            數字: {{ count }}
+        </div>
+        <!-- @(簡寫) + 監聽的事件名(click) => 點擊事件 -->
+        <button type="button" @click="count++">增加</button>
+        <!-- v-on:(完整寫法) + 監聽的事件名(click) => 點擊事件 -->
+        <button type="button" v-on: click="count++">增加</button>
+    </div>
+
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        const { createApp } = Vue
+
+        createApp({
+
+            // ES6之前
+            // data: function() {
+            // return {
+            // message: 'Hello Vue!'
+            // }
+            // }
+
+            // 資料(宣告資料的分區)
+            data() {
+                // 資料這區一定要分區
+                return {
+                    message: 'Hello Vue!',
+                    array: [],
+                    object: {},
+                }
+            },
+
+            // 函式(function)區塊
+            methods: {
+                // 寫 function 的地方
+            }
+        }).mount('#app')
+    </script>
+
+</body>
+
+</html>
