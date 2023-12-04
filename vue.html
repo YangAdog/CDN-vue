@@ -5,6 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .img {
+            width: 100px;
+            height: 100px;
+        }
+    </style>
 </head>
 
 <body>
@@ -26,7 +32,23 @@
         <div></div>
         <!-- input值為多少 資料就跟著變動，反過來說也一樣 -->
         {{ inputText }}
-        
+
+        <hr>
+
+        <!-- v-if (判斷式) => 假設為真 該元素會出現在文件內，反之，不出現在文件內 -->
+        <div>
+            <div>戰力: {{ power }}</div>
+            <button type="button" @click="power++">增加戰力</button>
+            <button type="button" @click="power--">減少戰力</button>
+            <img v-if="power < 5" src="./img/狗.gif" alt="">
+            <img v-else-if="power < 10" src="./img/狗.jpg" alt="">
+            <img v-else src="./img/1.gif" alt="">
+
+            <!-- v-show = (判斷式) => 假設為真 該元素會移除display: none，
+            反之 增加display: none-->
+            <div v-show="power > 5">v-show</div>
+        </div>
+
     </div>
 
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -50,7 +72,8 @@
                     array: [],
                     object: {},
                     count: 0,
-                    inputText: '',
+                    inputText: '雙向綁定',
+                    power:0,
                 }
             },
 
@@ -64,7 +87,6 @@
                     // 要到其他分區取資料 要用this
                     // console.log(this);
                     this.count++;
-
                 },
             },
         }).mount('#app')
